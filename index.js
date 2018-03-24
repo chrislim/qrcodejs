@@ -530,6 +530,7 @@ var QRCode;
 	 * @param {Number} [vOption.height=256]
 	 * @param {String} [vOption.colorDark="#000000"]
 	 * @param {String} [vOption.colorLight="#ffffff"]
+	 * @param {String} [vOption.title=vOption.text]
 	 * @param {QRCode.CorrectLevel} [vOption.correctLevel=QRCode.CorrectLevel.H] [L|M|Q|H] 
 	 */
 	QRCode = function (el, vOption) {
@@ -569,7 +570,7 @@ var QRCode;
 		this._oDrawing = new Drawing(this._el, this._htOption);
 		
 		if (this._htOption.text) {
-			this.makeCode(this._htOption.text);	
+			this.makeCode(this._htOption.text, this._htOption.title);	
 		}
 	};
 	
@@ -578,11 +579,11 @@ var QRCode;
 	 * 
 	 * @param {String} sText link data
 	 */
-	QRCode.prototype.makeCode = function (sText) {
+	QRCode.prototype.makeCode = function (sText, sTitle) {
 		this._oQRCode = new QRCodeModel(_getTypeNumber(sText, this._htOption.correctLevel), this._htOption.correctLevel);
 		this._oQRCode.addData(sText);
 		this._oQRCode.make();
-		this._el.title = sText;
+		this._el.title = sTitle || sText;
 		this._oDrawing.draw(this._oQRCode);			
 		this.makeImage();
 	};
